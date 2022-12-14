@@ -1,0 +1,69 @@
+plugins {
+    id "com.android.library"
+    id 'org.jetbrains.kotlin.android'
+    id 'kotlin-kapt'
+    id 'dagger.hilt.android.plugin'
+}
+
+android {
+    namespace 'com.sadri.shared'
+    compileSdk build.compileSdk
+
+    defaultConfig {
+        minSdk build.minSdk
+        targetSdk build.targetSdk
+
+        testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
+    }
+
+    buildTypes {
+        release {
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+        }
+    }
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_1_8
+        targetCompatibility JavaVersion.VERSION_1_8
+    }
+    kotlinOptions {
+        jvmTarget = '1.8'
+    }
+    buildFeatures {
+        compose true
+    }
+    composeOptions {
+        kotlinCompilerExtensionVersion '1.2.0'
+    }
+}
+
+dependencies {
+    // compose
+    implementation "androidx.compose.ui:ui:$library.compose"
+    implementation "androidx.compose.material:material:$library.compose"
+    implementation "androidx.compose.ui:ui-tooling-preview:$library.compose"
+
+    // di
+    kapt "com.google.dagger:hilt-android-compiler:$library.hilt"
+    implementation "com.google.dagger:hilt-android:$library.hilt"
+
+    // network
+    implementation "com.google.code.gson:gson:$library.json"
+    implementation("com.squareup.retrofit2:retrofit:$library.retrofit")
+    implementation("com.squareup.retrofit2:converter-gson:$library.retrofit")
+    implementation "com.squareup.okhttp3:logging-interceptor:$library.okhttp"
+
+    // navigation
+    implementation "androidx.navigation:navigation-fragment-ktx:$library.navigation"
+    implementation "androidx.navigation:navigation-ui-ktx:$library.navigation"
+    implementation "androidx.navigation:navigation-compose:$library.navigation"
+
+    // okhttp
+    implementation "com.squareup.okhttp3:okhttp:$library.okhttp"
+
+    // logger
+    implementation "com.jakewharton.timber:timber:$library.timber"
+
+    // coil
+    implementation "io.coil-kt:coil-compose:$library.coil"
+}
