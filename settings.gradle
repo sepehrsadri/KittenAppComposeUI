@@ -16,3 +16,4 @@ rootProject.name = "Kitten"
 include ':app'
 include ':shared'
 include ':features:category'
+include ':features:kitten'
