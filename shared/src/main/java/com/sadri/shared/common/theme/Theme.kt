@@ -1,4 +1,4 @@
-package com.sadri.kitten.ui.theme
+package com.sadri.shared.common.theme
 
 import androidx.compose.foundation.isSystemInDarkTheme
 import androidx.compose.material.MaterialTheme

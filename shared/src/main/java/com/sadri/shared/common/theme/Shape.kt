@@ -1,4 +1,4 @@
-package com.sadri.kitten.ui.theme
+package com.sadri.shared.common.theme
 
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.Shapes
