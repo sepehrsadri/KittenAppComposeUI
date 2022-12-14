@@ -1,11 +1,11 @@
 ext {
 
     library = [
-            kotlin       : '1.9.0',
+            kotlin       : '1.7.0',
             navigation   : '2.5.3',
             okhttp       : '4.10.0',
             dagger       : '2.40',
-            hilt         : '2.40',
+            hilt         : '2.42',
             androidxHilt : '1.0.0',
             hiltCompose  : '1.0.0',
             lifecycle    : '2.5.1',
@@ -28,6 +28,6 @@ ext {
     build = [
             compileSdk: 33,
             minSdk    : 24,
-            targetSdk : 30
+            targetSdk : 33
     ]
 }
