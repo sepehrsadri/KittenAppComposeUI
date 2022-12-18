@@ -27,6 +27,14 @@ class CategoryViewModel @Inject constructor(
     loadCategories()
   }
 
+  fun retry() {
+    state = state.copy(
+      isLoading = true,
+      isFailed = false
+    )
+    loadCategories()
+  }
+
   private fun loadCategories() {
     viewModelScope.launch {
       loadCategoriesUseCase()

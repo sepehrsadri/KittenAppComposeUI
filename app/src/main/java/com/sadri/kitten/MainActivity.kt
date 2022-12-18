@@ -44,7 +44,10 @@ fun KittenApp() {
         startDestination = Screen.Category.route
       ) {
         composable(Screen.Category.route) {
-          CategoryScreen(onCategoryClicked = actions.openKittenScreen)
+          CategoryScreen(
+            modifier = Modifier.fillMaxSize(),
+            onCategoryClicked = actions.openKittenScreen
+          )
         }
         composable(Screen.Kitten.route) {
           KittenScreen(modifier = Modifier.fillMaxSize())

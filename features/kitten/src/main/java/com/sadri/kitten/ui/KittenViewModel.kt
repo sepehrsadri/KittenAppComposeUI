@@ -52,6 +52,14 @@ class KittenViewModel @Inject constructor(
     }
   }
 
+  fun retry() {
+    state = state.copy(
+      isLoading = true,
+      isFailed = false
+    )
+    loadKittens()
+  }
+
   fun loadMore() {
     requireNotNull(categoryId)
     state = state.copy(isLoadingMoreItems = true)
