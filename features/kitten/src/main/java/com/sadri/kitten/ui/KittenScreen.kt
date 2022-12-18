@@ -2,12 +2,11 @@ package com.sadri.kitten.ui
 
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.lazy.LazyColumn
-import androidx.compose.foundation.lazy.LazyItemScope
-import androidx.compose.foundation.lazy.LazyListScope
+import androidx.compose.foundation.lazy.grid.GridCells
+import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
+import androidx.compose.foundation.lazy.grid.items
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.ButtonDefaults
@@ -36,9 +35,11 @@ fun KittenScreen(
     state.isLoading -> {
       KittenProgressItem()
     }
+
     state.isFailed -> {
       KittenItemsLoadingFailed { kittenViewModel.retry() }
     }
+
     state.kittens != null -> {
       KittensSection(
         modifier = modifier,
@@ -64,16 +65,12 @@ fun KittensSection(
       verticalArrangement = Arrangement.Center,
       horizontalAlignment = Alignment.CenterHorizontally
     ) {
-      LazyColumn(
+      LazyVerticalGrid(
         modifier = modifier.weight(1f),
-        contentPadding = PaddingValues(16.dp),
-        verticalArrangement = Arrangement.spacedBy(16.dp)
+        columns = GridCells.Fixed(2)
       ) {
         items(items = kittens, key = { it.hashCode() }) {
-          CardItem(
-            title = it.id,
-            imageUrl = it.url,
-          ) {
+          CardItem(imageUrl = it.url) {
             // no-op
           }
         }
@@ -99,17 +96,4 @@ fun KittensSection(
       }
     }
   }
-}
-
-inline fun <T> LazyListScope.items(
-  items: List<T>,
-  noinline key: ((item: T) -> Any)? = null,
-  noinline contentType: (item: T) -> Any? = { null },
-  crossinline itemContent: @Composable LazyItemScope.(item: T) -> Unit
-) = items(
-  count = items.size,
-  key = if (key != null) { index: Int -> key(items[index]) } else null,
-  contentType = { index: Int -> contentType(items[index]) }
-) {
-  itemContent(items[it])
 }

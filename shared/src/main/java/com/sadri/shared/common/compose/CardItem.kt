@@ -1,8 +1,9 @@
 package com.sadri.shared.common.compose
 
+import androidx.compose.foundation.Image
 import androidx.compose.foundation.clickable
+import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
@@ -16,6 +17,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.layout.ContentScale
+import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
 import coil.compose.AsyncImage
 import com.sadri.shared.common.theme.Typography
@@ -23,9 +25,10 @@ import com.sadri.shared.common.theme.Typography
 @Composable
 fun CardItem(
   modifier: Modifier = Modifier,
-  title: String,
+  title: String? = null,
   subtitle: String? = null,
   imageUrl: String? = null,
+  imageResource: Int? = null,
   onCardClick: () -> Unit
 ) {
   Card(
@@ -36,10 +39,11 @@ fun CardItem(
       },
     elevation = 8.dp
   ) {
-    Row(
-      verticalAlignment = Alignment.CenterVertically,
+    Column(
       modifier = Modifier
-        .padding(8.dp)
+        .padding(8.dp),
+      verticalArrangement = Arrangement.Center,
+      horizontalAlignment = Alignment.CenterHorizontally
     ) {
       if (!imageUrl.isNullOrEmpty()) {
         AsyncImage(
@@ -48,25 +52,38 @@ fun CardItem(
           contentScale = ContentScale.Crop,
           modifier = Modifier
             .clip(CircleShape)
-            .size(48.dp)
+            .size(120.dp)
         )
       }
-      Column(
-        modifier = Modifier
-          .padding(start = 8.dp)
-      ) {
-        Text(
-          text = title,
-          style = Typography.body1,
-          color = MaterialTheme.colors.onSurface
+      if (imageResource != null) {
+        Image(
+          painter = painterResource(id = imageResource),
+          contentDescription = "loaded from image resources",
+          contentScale = ContentScale.Crop,
+          modifier = Modifier
+            .clip(CircleShape)
+            .size(120.dp)
         )
+      }
+      if (title.isNullOrEmpty().not()) {
         Spacer(modifier = Modifier.size(8.dp))
-        if (!subtitle.isNullOrEmpty()) {
+        Column(
+          modifier = Modifier
+            .padding(start = 8.dp)
+        ) {
           Text(
-            text = subtitle,
-            style = Typography.subtitle1,
-            color = MaterialTheme.colors.onBackground
+            text = title!!,
+            style = Typography.body1,
+            color = MaterialTheme.colors.onSurface
           )
+          Spacer(modifier = Modifier.size(8.dp))
+          if (!subtitle.isNullOrEmpty()) {
+            Text(
+              text = subtitle,
+              style = Typography.subtitle1,
+              color = MaterialTheme.colors.onBackground
+            )
+          }
         }
       }
     }
