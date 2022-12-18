@@ -35,4 +35,6 @@ dependencies {
 
     implementation("org.jetbrains.kotlinx:kotlinx-coroutines-core:$library.coroutine")
     implementation("org.jetbrains.kotlinx:kotlinx-coroutines-test:$library.coroutine")
+
+    implementation "junit:junit:$library.junit"
 }
