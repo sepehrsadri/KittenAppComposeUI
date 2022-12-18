@@ -17,6 +17,7 @@ import com.sadri.shared.common.compose.ScaffoldWithTopBar
 
 @Composable
 fun CategoryScreen(
+  modifier: Modifier = Modifier,
   categoryViewModel: CategoryViewModel = hiltViewModel(),
   onCategoryClicked: (String) -> Unit
 ) {
@@ -26,10 +27,11 @@ fun CategoryScreen(
       KittenProgressItem()
     }
     state.isFailed -> {
-      KittenItemsLoadingFailed()
+      KittenItemsLoadingFailed { categoryViewModel.retry() }
     }
     state.categories != null -> {
       CategoriesSection(
+        modifier = modifier,
         categories = state.categories,
         onCategoryClicked = onCategoryClicked
       )
@@ -40,13 +42,13 @@ fun CategoryScreen(
 
 @Composable
 fun CategoriesSection(
+  modifier: Modifier,
   categories: List<CategoryItem>,
   onCategoryClicked: (String) -> Unit
 ) {
   ScaffoldWithTopBar(title = "Categories") {
     LazyColumn(
-      modifier = Modifier
-        .fillMaxSize(),
+      modifier = modifier,
       contentPadding = PaddingValues(16.dp),
       verticalArrangement = Arrangement.spacedBy(16.dp)
     ) {

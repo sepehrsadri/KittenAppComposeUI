@@ -35,7 +35,7 @@ fun KittenScreen(
       KittenProgressItem()
     }
     state.isFailed -> {
-      KittenItemsLoadingFailed()
+      KittenItemsLoadingFailed { kittenViewModel.retry() }
     }
     state.kittens != null -> {
       KittensSection(
