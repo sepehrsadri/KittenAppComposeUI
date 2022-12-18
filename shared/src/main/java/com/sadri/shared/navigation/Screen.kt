@@ -2,22 +2,29 @@ package com.sadri.shared.navigation
 
 import androidx.navigation.NavHostController
 import com.sadri.shared.navigation.Screen.Kitten.KittenArgs.CategoryId
+import com.sadri.shared.navigation.Screen.Kitten.KittenArgs.CategoryName
 
 sealed class Screen(val route: String) {
   object Category : Screen("Category")
 
-  object Kitten : Screen("Kitten/{$CategoryId}") {
+  object Kitten : Screen("Kittens/{${CategoryName}}/{${CategoryId}}") {
     object KittenArgs {
       const val CategoryId = "CategoryId"
+      const val CategoryName = "CategoryName"
     }
 
-    fun createRoute(categoryId: String) = "Kitten/$categoryId"
+    fun createRoute(categoryName: String, categoryId: String) = "Kittens/$categoryName/$categoryId"
   }
 }
 
 class Actions(navHostController: NavHostController) {
-  val openKittenScreen: (String) -> Unit = { categoryId ->
-    navHostController.navigate(Screen.Kitten.createRoute(categoryId))
+  val openKittenScreen: (String, String) -> Unit = { categoryName, categoryId ->
+    navHostController.navigate(
+      Screen.Kitten.createRoute(
+        categoryName = categoryName,
+        categoryId = categoryId
+      )
+    )
   }
 
   val navigateHome: () -> Unit = {

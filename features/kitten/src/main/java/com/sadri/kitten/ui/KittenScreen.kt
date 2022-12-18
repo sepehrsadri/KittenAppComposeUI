@@ -43,6 +43,7 @@ fun KittenScreen(
     state.kittens != null -> {
       KittensSection(
         modifier = modifier,
+        category = state.categoryName,
         kittens = state.kittens,
         isLoadingMore = state.isLoadingMoreItems,
         onLoadMoreClick = { kittenViewModel.loadMore() }
@@ -55,11 +56,12 @@ fun KittenScreen(
 @Composable
 fun KittensSection(
   modifier: Modifier = Modifier,
+  category: String,
   kittens: List<KittenItem>,
   isLoadingMore: Boolean,
   onLoadMoreClick: () -> Unit
 ) {
-  ScaffoldWithTopBar(title = "Kittens") {
+  ScaffoldWithTopBar(title = "${category.capitalize()} Kittens") {
     Column(
       modifier = modifier.verticalScroll(rememberScrollState()),
       verticalArrangement = Arrangement.Center,

@@ -18,7 +18,7 @@ import com.sadri.shared.common.compose.ScaffoldWithTopBar
 fun CategoryScreen(
   modifier: Modifier = Modifier,
   categoryViewModel: CategoryViewModel = hiltViewModel(),
-  onCategoryClicked: (String) -> Unit
+  onCategoryClicked: (String, String) -> Unit
 ) {
   val state = categoryViewModel.state
   when {
@@ -45,7 +45,7 @@ fun CategoryScreen(
 fun CategoriesSection(
   modifier: Modifier,
   categories: List<CategoryItem>,
-  onCategoryClicked: (String) -> Unit
+  onCategoryClicked: (String, String) -> Unit
 ) {
   ScaffoldWithTopBar(title = "Categories") {
     LazyVerticalGrid(
@@ -62,7 +62,7 @@ fun CategoriesSection(
               title = category.title,
               imageUrl = category.image.url,
             ) {
-              onCategoryClicked(category.id.toString())
+              onCategoryClicked(category.title, category.id.toString())
             }
           }
 
@@ -71,7 +71,7 @@ fun CategoriesSection(
               title = category.title,
               imageResource = R.drawable.unknown_kitten,
             ) {
-              onCategoryClicked(category.id.toString())
+              onCategoryClicked(category.title, category.id.toString())
             }
           }
         }
