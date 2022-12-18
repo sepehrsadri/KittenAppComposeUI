@@ -3,6 +3,7 @@ package com.sadri.kitten.ui
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
+import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.LazyItemScope
@@ -10,6 +11,7 @@ import androidx.compose.foundation.lazy.LazyListScope
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.ButtonDefaults
+import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Text
 import androidx.compose.material.TextButton
 import androidx.compose.runtime.Composable
@@ -80,13 +82,19 @@ fun KittensSection(
         KittenProgressItem()
       } else {
         TextButton(
-          modifier = Modifier.padding(8.dp),
+          modifier = Modifier
+            .padding(8.dp)
+            .fillMaxWidth(),
           onClick = onLoadMoreClick,
           colors = ButtonDefaults.buttonColors(
             backgroundColor = LightKitten
           )
         ) {
-          Text(text = "Load More")
+          Text(
+            text = "Load More",
+            style = MaterialTheme.typography.body1,
+            color = MaterialTheme.colors.primary
+          )
         }
       }
     }
