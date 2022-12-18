@@ -38,6 +38,7 @@ android {
 }
 
 dependencies {
+    testImplementation project(':test-utils')
     // compose
     implementation "androidx.compose.ui:ui:$library.compose"
     implementation "androidx.compose.material:material:$library.compose"
@@ -66,4 +67,11 @@ dependencies {
 
     // coil
     implementation "io.coil-kt:coil-compose:$library.coil"
+
+    // test
+    testImplementation "junit:junit:$library.junit"
+    testImplementation "org.mockito:mockito-core:$library.mockito"
+    testImplementation "org.mockito:mockito-inline:$library.mockito"
+    testImplementation "org.mockito.kotlin:mockito-kotlin:$library.mockito"
+    testImplementation "org.jetbrains.kotlinx:kotlinx-coroutines-test:$library.coroutine"
 }
