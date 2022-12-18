@@ -12,6 +12,7 @@ import com.sadri.shared.data.entity.onFailed
 import com.sadri.shared.data.entity.onSuccess
 import com.sadri.shared.domain.interactor.LoadKittensUseCase
 import com.sadri.shared.navigation.Screen.Kitten.KittenArgs.CategoryId
+import com.sadri.shared.navigation.Screen.Kitten.KittenArgs.CategoryName
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
 import javax.inject.Inject
@@ -23,7 +24,7 @@ class KittenViewModel @Inject constructor(
   private val kittenItemMapper: KittenItemMapper
 ) : ViewModel() {
 
-  var state by mutableStateOf(KittenScreenState())
+  var state by mutableStateOf(KittenScreenState(savedStateHandle[CategoryName]!!))
     private set
 
   private val categoryId: String? = savedStateHandle[CategoryId]
@@ -81,6 +82,7 @@ class KittenViewModel @Inject constructor(
 }
 
 data class KittenScreenState(
+  val categoryName: String,
   val isLoading: Boolean = true,
   val isLoadingMoreItems: Boolean = false,
   val isFailed: Boolean = false,

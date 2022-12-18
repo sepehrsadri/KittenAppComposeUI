@@ -14,10 +14,10 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import com.sadri.category.ui.CategoryScreen
-import com.sadri.shared.navigation.Actions
-import com.sadri.shared.navigation.Screen
 import com.sadri.kitten.ui.KittenScreen
 import com.sadri.shared.common.theme.KittenTheme
+import com.sadri.shared.navigation.Actions
+import com.sadri.shared.navigation.Screen
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
@@ -62,7 +62,9 @@ fun KittenApp() {
 fun DefaultPreview() {
   KittenTheme {
     CategoryScreen(
-      onCategoryClicked = { println("On Feed $it Clicked") }
+      onCategoryClicked = { categoryName, categoryId ->
+        println("On Category Id $categoryId with name $categoryName Clicked")
+      }
     )
   }
 }
