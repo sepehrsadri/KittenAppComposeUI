@@ -43,7 +43,8 @@ fun KittenItemsLoadingFailed(retry: () -> Unit) {
         ) {
           Text(
             text = "Retry",
-            style = MaterialTheme.typography.h1
+            style = MaterialTheme.typography.h2,
+            color = MaterialTheme.colors.primary
           )
         }
       }

@@ -25,7 +25,8 @@ fun ScaffoldWithTopBar(
             text = title,
             modifier = Modifier.fillMaxWidth(),
             textAlign = TextAlign.Center,
-            color = LightGreys90
+            color = MaterialTheme.colors.primary,
+            style = MaterialTheme.typography.h1
           )
         })
     },
