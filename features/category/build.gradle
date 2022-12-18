@@ -40,6 +40,7 @@ android {
 
 dependencies {
     implementation project(':shared')
+    testImplementation project(':test-utils')
 
     // kotlin
     implementation "androidx.core:core-ktx:$library.kotlin"
@@ -81,5 +82,5 @@ dependencies {
     testImplementation "org.mockito:mockito-core:$library.mockito"
     testImplementation "org.mockito:mockito-inline:$library.mockito"
     testImplementation "org.mockito.kotlin:mockito-kotlin:$library.mockito"
-    testImplementation "org.jetbrains.kotlinx:kotlinx-coroutines-test:$library.coroutineTest"
+    testImplementation "org.jetbrains.kotlinx:kotlinx-coroutines-test:$library.coroutine"
 }
