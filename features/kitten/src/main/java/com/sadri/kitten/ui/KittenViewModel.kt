@@ -29,11 +29,11 @@ class KittenViewModel @Inject constructor(
   private val categoryId: String? = savedStateHandle[CategoryId]
 
   init {
-    requireNotNull(categoryId)
-    loadKittens(categoryId)
+    loadKittens()
   }
 
-  private fun loadKittens(categoryId: String) {
+  private fun loadKittens() {
+    requireNotNull(categoryId)
     viewModelScope.launch {
       loadKittensUseCase(categoryId.toLong())
         .onSuccess { kittenEntities ->
@@ -51,10 +51,30 @@ class KittenViewModel @Inject constructor(
         }
     }
   }
+
+  fun loadMore() {
+    requireNotNull(categoryId)
+    state = state.copy(isLoadingMoreItems = true)
+    viewModelScope.launch {
+      loadKittensUseCase(categoryId.toLong())
+        .onSuccess { kittenEntities ->
+          val kittens = (state.kittens!! + kittenItemMapper.mapToKittenItems(kittenEntities))
+            .toMutableList().distinctBy { it.id }
+          state = state.copy(
+            isLoadingMoreItems = false,
+            kittens = kittens
+          )
+        }
+        .onFailed {
+          state = state.copy(isLoadingMoreItems = false)
+        }
+    }
+  }
 }
 
 data class KittenScreenState(
   val isLoading: Boolean = true,
+  val isLoadingMoreItems: Boolean = false,
   val isFailed: Boolean = false,
   val kittens: List<KittenItem>? = null
 )

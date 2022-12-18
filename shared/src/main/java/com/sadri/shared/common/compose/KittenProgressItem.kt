@@ -2,6 +2,7 @@ package com.sadri.shared.common.compose
 
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.material.CircularProgressIndicator
 import androidx.compose.material.MaterialTheme
@@ -19,7 +20,8 @@ fun KittenProgressItem() {
     CircularProgressIndicator(
       color = MaterialTheme.colors.secondary,
       modifier = Modifier
-        .size(32.dp)
+        .size(64.dp)
+        .padding(16.dp)
         .align(Alignment.Center)
     )
   }

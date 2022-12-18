@@ -1,12 +1,19 @@
 package com.sadri.kitten.ui
 
 import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
-import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.LazyItemScope
 import androidx.compose.foundation.lazy.LazyListScope
+import androidx.compose.foundation.rememberScrollState
+import androidx.compose.foundation.verticalScroll
+import androidx.compose.material.ButtonDefaults
+import androidx.compose.material.Text
+import androidx.compose.material.TextButton
 import androidx.compose.runtime.Composable
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
@@ -15,10 +22,12 @@ import com.sadri.shared.common.compose.CardItem
 import com.sadri.shared.common.compose.KittenItemsLoadingFailed
 import com.sadri.shared.common.compose.KittenProgressItem
 import com.sadri.shared.common.compose.ScaffoldWithTopBar
+import com.sadri.shared.common.theme.LightKitten
 
 @Composable
 fun KittenScreen(
-  kittenViewModel: KittenViewModel = hiltViewModel()
+  modifier: Modifier = Modifier,
+  kittenViewModel: KittenViewModel = hiltViewModel(),
 ) {
   val state = kittenViewModel.state
   when {
@@ -29,7 +38,12 @@ fun KittenScreen(
       KittenItemsLoadingFailed()
     }
     state.kittens != null -> {
-      KittensSection(state.kittens)
+      KittensSection(
+        modifier = modifier,
+        kittens = state.kittens,
+        isLoadingMore = state.isLoadingMoreItems,
+        onLoadMoreClick = { kittenViewModel.loadMore() }
+      )
     }
   }
 
@@ -37,24 +51,42 @@ fun KittenScreen(
 
 @Composable
 fun KittensSection(
-  categories: List<KittenItem>
+  modifier: Modifier = Modifier,
+  kittens: List<KittenItem>,
+  isLoadingMore: Boolean,
+  onLoadMoreClick: () -> Unit
 ) {
   ScaffoldWithTopBar(title = "Kittens") {
-    LazyColumn(
-      modifier = Modifier
-        .fillMaxSize(),
-      contentPadding = PaddingValues(16.dp),
-      verticalArrangement = Arrangement.spacedBy(16.dp)
+    Column(
+      modifier = modifier.verticalScroll(rememberScrollState()),
+      verticalArrangement = Arrangement.Center,
+      horizontalAlignment = Alignment.CenterHorizontally
     ) {
-      items(
-        items = categories,
-        key = { it.hashCode() }
+      LazyColumn(
+        modifier = modifier.weight(1f),
+        contentPadding = PaddingValues(16.dp),
+        verticalArrangement = Arrangement.spacedBy(16.dp)
       ) {
-        CardItem(
-          title = it.id,
-          imageUrl = it.url,
+        items(items = kittens, key = { it.hashCode() }) {
+          CardItem(
+            title = it.id,
+            imageUrl = it.url,
+          ) {
+            // no-op
+          }
+        }
+      }
+      if (isLoadingMore) {
+        KittenProgressItem()
+      } else {
+        TextButton(
+          modifier = Modifier.padding(8.dp),
+          onClick = onLoadMoreClick,
+          colors = ButtonDefaults.buttonColors(
+            backgroundColor = LightKitten
+          )
         ) {
-          // no-op
+          Text(text = "Load More")
         }
       }
     }

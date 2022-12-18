@@ -47,7 +47,7 @@ fun KittenApp() {
           CategoryScreen(onCategoryClicked = actions.openKittenScreen)
         }
         composable(Screen.Kitten.route) {
-          KittenScreen()
+          KittenScreen(modifier = Modifier.fillMaxSize())
         }
       }
     }
