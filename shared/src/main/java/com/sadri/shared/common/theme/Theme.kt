@@ -11,10 +11,8 @@ private val DarkColorPalette = darkColors(
   primary = DarkGreys10,
   primaryVariant = DarkGreys40,
   secondary = LightKitten,
-  background = Color.Transparent,
+  background = DarkGreys10,
   surface = DarkGreys20,
-  onPrimary = DarkGreys90,
-  onBackground = DarkGreys70,
   onSurface = DarkGreys90
 )
 
@@ -22,10 +20,8 @@ private val LightColorPalette = lightColors(
   primary = LightGreys10,
   primaryVariant = LightGreys40,
   secondary = LightKitten,
-  background = Color.Transparent,
+  background = LightGreys10,
   surface = LightGreys20,
-  onPrimary = LightGreys90,
-  onBackground = LightGreys70,
   onSurface = LightGreys90
 )
 

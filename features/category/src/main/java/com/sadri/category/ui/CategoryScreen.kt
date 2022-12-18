@@ -1,15 +1,14 @@
 package com.sadri.category.ui
-import androidx.compose.foundation.layout.Arrangement
-import androidx.compose.foundation.layout.PaddingValues
-import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.lazy.LazyColumn
-import androidx.compose.foundation.lazy.LazyItemScope
-import androidx.compose.foundation.lazy.LazyListScope
+
+import androidx.compose.foundation.lazy.grid.GridCells
+import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
+import androidx.compose.foundation.lazy.grid.items
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
+import com.sadri.category.data.model.CategoryImage
 import com.sadri.category.data.model.CategoryItem
+import com.sadri.shared.R
 import com.sadri.shared.common.compose.CardItem
 import com.sadri.shared.common.compose.KittenItemsLoadingFailed
 import com.sadri.shared.common.compose.KittenProgressItem
@@ -26,9 +25,11 @@ fun CategoryScreen(
     state.isLoading -> {
       KittenProgressItem()
     }
+
     state.isFailed -> {
       KittenItemsLoadingFailed { categoryViewModel.retry() }
     }
+
     state.categories != null -> {
       CategoriesSection(
         modifier = modifier,
@@ -47,37 +48,34 @@ fun CategoriesSection(
   onCategoryClicked: (String) -> Unit
 ) {
   ScaffoldWithTopBar(title = "Categories") {
-    LazyColumn(
+    LazyVerticalGrid(
       modifier = modifier,
-      contentPadding = PaddingValues(16.dp),
-      verticalArrangement = Arrangement.spacedBy(16.dp)
+      columns = GridCells.Fixed(2)
     ) {
       items(
         items = categories,
         key = { it.hashCode() }
-      ) {
-        it.title?.let { title ->
-          CardItem(
-            title = title,
-            imageUrl = it.image,
-          ) {
-            onCategoryClicked(it.id.toString())
+      ) { category ->
+        when (category.image) {
+          is CategoryImage.Url -> {
+            CardItem(
+              title = category.title,
+              imageUrl = category.image.url,
+            ) {
+              onCategoryClicked(category.id.toString())
+            }
+          }
+
+          is CategoryImage.Unknown -> {
+            CardItem(
+              title = category.title,
+              imageResource = R.drawable.unknown_kitten,
+            ) {
+              onCategoryClicked(category.id.toString())
+            }
           }
         }
       }
     }
   }
-}
-
-inline fun <T> LazyListScope.items(
-  items: List<T>,
-  noinline key: ((item: T) -> Any)? = null,
-  noinline contentType: (item: T) -> Any? = { null },
-  crossinline itemContent: @Composable LazyItemScope.(item: T) -> Unit
-) = items(
-  count = items.size,
-  key = if (key != null) { index: Int -> key(items[index]) } else null,
-  contentType = { index: Int -> contentType(items[index]) }
-) {
-  itemContent(items[it])
 }

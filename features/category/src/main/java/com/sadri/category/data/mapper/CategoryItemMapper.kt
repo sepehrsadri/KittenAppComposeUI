@@ -12,6 +12,6 @@ class CategoryItemMapper @Inject constructor() {
   }
 
   private fun CategoryEntity.toCategoryItem(): CategoryItem {
-    return CategoryItem(id = id, title = name, image = "https://cdn2.thecatapi.com/images/7e3.jpg")
+    return CategoryItem(id = id, title = name)
   }
 }
