@@ -3,6 +3,8 @@ package com.sadri.kitten
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
+import androidx.activity.viewModels
+import androidx.compose.foundation.isSystemInDarkTheme
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Surface
@@ -22,19 +24,27 @@ import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
 class MainActivity : ComponentActivity() {
+
+  private val mainViewModel: MainViewModel by viewModels()
   override fun onCreate(savedInstanceState: Bundle?) {
     super.onCreate(savedInstanceState)
     setContent {
-      KittenApp()
+      val darkThemeState = mainViewModel.darkThemeState
+      KittenApp(darkThemeState.darkTheme) {
+        mainViewModel.onDarkThemeChanged(it)
+      }
     }
   }
 }
 
 @Composable
-fun KittenApp() {
+fun KittenApp(
+  darkTheme: Boolean,
+  onThemeChanged: (Boolean) -> Unit
+) {
   val navController = rememberNavController()
   val actions = remember(navController) { Actions(navController) }
-  KittenTheme {
+  KittenTheme(darkTheme = darkTheme) {
     Surface(
       modifier = Modifier.fillMaxSize(),
       color = MaterialTheme.colors.background
@@ -46,11 +56,17 @@ fun KittenApp() {
         composable(Screen.Category.route) {
           CategoryScreen(
             modifier = Modifier.fillMaxSize(),
-            onCategoryClicked = actions.openKittenScreen
+            onCategoryClicked = actions.openKittenScreen,
+            darkTheme = darkTheme,
+            onThemeChanged = onThemeChanged
           )
         }
         composable(Screen.Kitten.route) {
-          KittenScreen(modifier = Modifier.fillMaxSize())
+          KittenScreen(
+            modifier = Modifier.fillMaxSize(),
+            darkTheme = darkTheme,
+            onThemeChanged = onThemeChanged
+          )
         }
       }
     }
@@ -64,7 +80,9 @@ fun DefaultPreview() {
     CategoryScreen(
       onCategoryClicked = { categoryName, categoryId ->
         println("On Category Id $categoryId with name $categoryName Clicked")
-      }
+      },
+      darkTheme = isSystemInDarkTheme(),
+      onThemeChanged = {}
     )
   }
 }

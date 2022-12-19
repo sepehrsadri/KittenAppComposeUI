@@ -10,15 +10,17 @@ import com.sadri.category.data.model.CategoryImage
 import com.sadri.category.data.model.CategoryItem
 import com.sadri.shared.R
 import com.sadri.shared.common.compose.CardItem
+import com.sadri.shared.common.compose.DrawerScaffoldWithTopBar
 import com.sadri.shared.common.compose.KittenItemsLoadingFailed
 import com.sadri.shared.common.compose.KittenProgressItem
-import com.sadri.shared.common.compose.ScaffoldWithTopBar
 
 @Composable
 fun CategoryScreen(
   modifier: Modifier = Modifier,
   categoryViewModel: CategoryViewModel = hiltViewModel(),
-  onCategoryClicked: (String, String) -> Unit
+  onCategoryClicked: (String, String) -> Unit,
+  darkTheme: Boolean,
+  onThemeChanged: (Boolean) -> Unit
 ) {
   val state = categoryViewModel.state
   when {
@@ -27,14 +29,19 @@ fun CategoryScreen(
     }
 
     state.isFailed -> {
-      KittenItemsLoadingFailed { categoryViewModel.retry() }
+      KittenItemsLoadingFailed(
+        darkTheme = darkTheme,
+        onThemeChanged = onThemeChanged
+      ) { categoryViewModel.retry() }
     }
 
     state.categories != null -> {
       CategoriesSection(
         modifier = modifier,
         categories = state.categories,
-        onCategoryClicked = onCategoryClicked
+        onCategoryClicked = onCategoryClicked,
+        darkTheme = darkTheme,
+        onThemeChanged = onThemeChanged
       )
     }
   }
@@ -45,9 +52,16 @@ fun CategoryScreen(
 fun CategoriesSection(
   modifier: Modifier,
   categories: List<CategoryItem>,
-  onCategoryClicked: (String, String) -> Unit
+  onCategoryClicked: (String, String) -> Unit,
+  darkTheme: Boolean,
+  onThemeChanged: (Boolean) -> Unit
 ) {
-  ScaffoldWithTopBar(title = "Categories") {
+  DrawerScaffoldWithTopBar(
+    modifier = modifier,
+    title = "Categories",
+    darkTheme = darkTheme,
+    onThemeChanged = onThemeChanged
+  ) {
     LazyVerticalGrid(
       modifier = modifier,
       columns = GridCells.Fixed(2)

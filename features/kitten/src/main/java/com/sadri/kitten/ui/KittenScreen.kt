@@ -20,15 +20,17 @@ import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import com.sadri.kitten.data.model.KittenItem
 import com.sadri.shared.common.compose.CardItem
+import com.sadri.shared.common.compose.DrawerScaffoldWithTopBar
 import com.sadri.shared.common.compose.KittenItemsLoadingFailed
 import com.sadri.shared.common.compose.KittenProgressItem
-import com.sadri.shared.common.compose.ScaffoldWithTopBar
 import com.sadri.shared.common.theme.LightKitten
 
 @Composable
 fun KittenScreen(
   modifier: Modifier = Modifier,
   kittenViewModel: KittenViewModel = hiltViewModel(),
+  darkTheme: Boolean,
+  onThemeChanged: (Boolean) -> Unit
 ) {
   val state = kittenViewModel.state
   when {
@@ -37,7 +39,10 @@ fun KittenScreen(
     }
 
     state.isFailed -> {
-      KittenItemsLoadingFailed { kittenViewModel.retry() }
+      KittenItemsLoadingFailed(
+        darkTheme = darkTheme,
+        onThemeChanged = onThemeChanged
+      ) { kittenViewModel.retry() }
     }
 
     state.kittens != null -> {
@@ -46,7 +51,9 @@ fun KittenScreen(
         category = state.categoryName,
         kittens = state.kittens,
         isLoadingMore = state.isLoadingMoreItems,
-        onLoadMoreClick = { kittenViewModel.loadMore() }
+        onLoadMoreClick = { kittenViewModel.loadMore() },
+        darkTheme = darkTheme,
+        onThemeChanged = onThemeChanged
       )
     }
   }
@@ -59,9 +66,16 @@ fun KittensSection(
   category: String,
   kittens: List<KittenItem>,
   isLoadingMore: Boolean,
-  onLoadMoreClick: () -> Unit
+  onLoadMoreClick: () -> Unit,
+  darkTheme: Boolean,
+  onThemeChanged: (Boolean) -> Unit
 ) {
-  ScaffoldWithTopBar(title = "${category.capitalize()} Kittens") {
+  DrawerScaffoldWithTopBar(
+    modifier = modifier,
+    title = "${category.capitalize()} Kittens",
+    darkTheme = darkTheme,
+    onThemeChanged = onThemeChanged
+  ) {
     Column(
       modifier = modifier.verticalScroll(rememberScrollState()),
       verticalArrangement = Arrangement.Center,

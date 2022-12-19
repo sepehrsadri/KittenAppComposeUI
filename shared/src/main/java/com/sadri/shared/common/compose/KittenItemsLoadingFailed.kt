@@ -20,8 +20,16 @@ import com.sadri.shared.R
 import com.sadri.shared.common.theme.LightKitten
 
 @Composable
-fun KittenItemsLoadingFailed(retry: () -> Unit) {
-  ScaffoldWithTopBar(title = "Loading Failed :(") {
+fun KittenItemsLoadingFailed(
+  darkTheme: Boolean,
+  onThemeChanged: (Boolean) -> Unit,
+  retry: () -> Unit
+) {
+  DrawerScaffoldWithTopBar(
+    title = "Loading Failed :(",
+    darkTheme = darkTheme,
+    onThemeChanged = onThemeChanged
+  ) {
     Box(modifier = Modifier.fillMaxSize()) {
       Column(Modifier.align(Alignment.Center)) {
         Image(
