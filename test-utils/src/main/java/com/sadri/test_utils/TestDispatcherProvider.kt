@@ -1,6 +1,6 @@
 package com.sadri.test_utils
 
-import com.sadri.shared.domain.executor.DispatcherProvider
+import com.sadri.core.domain.executor.DispatcherProvider
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.test.UnconfinedTestDispatcher

@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
+  <component name="GradleMigrationSettings" migrationVersion="1" />
   <component name="GradleSettings">
     <option name="linkedExternalProjectsSettings">
       <GradleProjectSettings>
@@ -14,7 +15,13 @@
             <option value="$PROJECT_DIR$/features" />
             <option value="$PROJECT_DIR$/features/category" />
             <option value="$PROJECT_DIR$/features/kitten" />
+            <option value="$PROJECT_DIR$/features/kitten/api" />
+            <option value="$PROJECT_DIR$/features/kitten/impl" />
             <option value="$PROJECT_DIR$/shared" />
+            <option value="$PROJECT_DIR$/shared/common" />
+            <option value="$PROJECT_DIR$/shared/core" />
+            <option value="$PROJECT_DIR$/shared/network" />
+            <option value="$PROJECT_DIR$/test-utils" />
           </set>
         </option>
       </GradleProjectSettings>

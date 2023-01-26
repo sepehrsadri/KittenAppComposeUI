@@ -49,8 +49,9 @@ android {
 }
 
 dependencies {
-    implementation project(':shared')
-    implementation project(':features:kitten')
+    implementation project(':shared:common')
+    implementation project(':shared:core')
+    implementation project(':features:kitten:impl')
     implementation project(':features:category')
     // kotlin
     implementation "androidx.core:core-ktx:$library.kotlin"

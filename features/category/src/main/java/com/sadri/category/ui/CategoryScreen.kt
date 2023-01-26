@@ -6,13 +6,9 @@ import androidx.compose.foundation.lazy.grid.items
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.hilt.navigation.compose.hiltViewModel
+import com.sadri.category.R
 import com.sadri.category.data.model.CategoryImage
 import com.sadri.category.data.model.CategoryItem
-import com.sadri.shared.R
-import com.sadri.shared.common.compose.CardItem
-import com.sadri.shared.common.compose.DrawerScaffoldWithTopBar
-import com.sadri.shared.common.compose.KittenItemsLoadingFailed
-import com.sadri.shared.common.compose.KittenProgressItem
 
 @Composable
 fun CategoryScreen(
@@ -25,11 +21,11 @@ fun CategoryScreen(
   val state = categoryViewModel.state
   when {
     state.isLoading -> {
-      KittenProgressItem()
+      com.sadri.common.compose.KittenProgressItem()
     }
 
     state.isFailed -> {
-      KittenItemsLoadingFailed(
+      com.sadri.common.compose.KittenItemsLoadingFailed(
         darkTheme = darkTheme,
         onThemeChanged = onThemeChanged
       ) { categoryViewModel.retry() }
@@ -56,7 +52,7 @@ fun CategoriesSection(
   darkTheme: Boolean,
   onThemeChanged: (Boolean) -> Unit
 ) {
-  DrawerScaffoldWithTopBar(
+  com.sadri.common.compose.DrawerScaffoldWithTopBar(
     modifier = modifier,
     title = "Categories",
     darkTheme = darkTheme,
@@ -72,7 +68,7 @@ fun CategoriesSection(
       ) { category ->
         when (category.image) {
           is CategoryImage.Url -> {
-            CardItem(
+            com.sadri.common.compose.CardItem(
               title = category.title,
               imageUrl = category.image.url,
             ) {
@@ -81,7 +77,7 @@ fun CategoriesSection(
           }
 
           is CategoryImage.Unknown -> {
-            CardItem(
+            com.sadri.common.compose.CardItem(
               title = category.title,
               imageResource = R.drawable.unknown_kitten,
             ) {

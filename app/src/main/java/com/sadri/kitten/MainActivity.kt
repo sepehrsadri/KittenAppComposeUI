@@ -16,10 +16,10 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import com.sadri.category.ui.CategoryScreen
-import com.sadri.kitten.ui.KittenScreen
-import com.sadri.shared.common.theme.KittenTheme
-import com.sadri.shared.navigation.Actions
-import com.sadri.shared.navigation.Screen
+import com.sadri.common.theme.KittenTheme
+import com.sadri.core.navigation.Actions
+import com.sadri.core.navigation.Screen
+import com.ui.KittenScreen
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
