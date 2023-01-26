@@ -31,7 +31,7 @@ android {
 }
 
 dependencies {
-    implementation project(':shared')
+    implementation project(':shared:core')
 
     implementation("org.jetbrains.kotlinx:kotlinx-coroutines-core:$library.coroutine")
     implementation("org.jetbrains.kotlinx:kotlinx-coroutines-test:$library.coroutine")

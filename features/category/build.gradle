@@ -39,7 +39,10 @@ android {
 }
 
 dependencies {
-    implementation project(':shared')
+    implementation project(':features:kitten:api')
+    implementation project(':shared:common')
+    implementation project(':shared:core')
+    implementation project(':shared:network')
     testImplementation project(':test-utils')
 
     // kotlin
@@ -57,7 +60,7 @@ dependencies {
     implementation "androidx.lifecycle:lifecycle-viewmodel-savedstate:$library.lifecycle"
 
     // di
-    api "com.google.dagger:hilt-android:$library.hilt"
+    implementation "com.google.dagger:hilt-android:$library.hilt"
     kapt "com.google.dagger:hilt-android-compiler:$library.hilt"
     implementation "androidx.hilt:hilt-work:$library.androidxHilt"
     kapt "androidx.hilt:hilt-compiler:$library.androidxHilt"

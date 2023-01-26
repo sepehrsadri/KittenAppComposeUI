@@ -1,11 +1,11 @@
 package com.sadri.category.ui
 
 import com.sadri.category.data.mapper.CategoryItemMapper
-import com.sadri.shared.data.entity.CategoryEntity
-import com.sadri.shared.data.entity.KittenEntity
-import com.sadri.shared.data.entity.Result
+import com.sadri.core.data.entity.CategoryEntity
+import com.sadri.core.data.entity.KittenEntity
+import com.sadri.core.data.entity.Result
 import com.sadri.shared.domain.interactor.LoadCategoriesUseCase
-import com.sadri.shared.domain.interactor.LoadKittensUseCase
+import com.sadri.kitten.domain.interactor.LoadKittensUseCase
 import com.sadri.test_utils.CoroutineTestRule
 import com.sadri.test_utils.TestDispatcherProvider
 import kotlinx.coroutines.ExperimentalCoroutinesApi
@@ -28,7 +28,7 @@ class CategoryViewModelBehaviouralTest {
   @get:Rule
   val coroutineTestRule = CoroutineTestRule()
 
-  private val loadKittensUseCase: LoadKittensUseCase = mock()
+  private val loadKittensUseCase: com.sadri.kitten.domain.interactor.LoadKittensUseCase = mock()
 
   private val loadCategoriesUseCase: LoadCategoriesUseCase = mock()
 
@@ -42,11 +42,11 @@ class CategoryViewModelBehaviouralTest {
   fun `given invoke viewModel then should invoke loadCategoriesUseCase`() = runTest {
     // given
     val categories = listOf(
-      CategoryEntity(id = 1, name = "box"),
-      CategoryEntity(id = 2, name = "sink")
+      com.sadri.core.data.entity.CategoryEntity(id = 1, name = "box"),
+      com.sadri.core.data.entity.CategoryEntity(id = 2, name = "sink")
     )
     loadCategoriesUseCase.stub {
-      onBlocking { invoke() } doReturn Result.Success(categories)
+      onBlocking { invoke() } doReturn com.sadri.core.data.entity.Result.Success(categories)
     }
 
     // when
@@ -66,11 +66,11 @@ class CategoryViewModelBehaviouralTest {
   fun `given viewModel retry then viewModel should invoke loadCategoriesUseCase`() = runTest {
     // given
     val categories = listOf(
-      CategoryEntity(id = 1, name = "box"),
-      CategoryEntity(id = 2, name = "sink")
+      com.sadri.core.data.entity.CategoryEntity(id = 1, name = "box"),
+      com.sadri.core.data.entity.CategoryEntity(id = 2, name = "sink")
     )
     loadCategoriesUseCase.stub {
-      onBlocking { invoke() } doReturn Result.Success(categories)
+      onBlocking { invoke() } doReturn com.sadri.core.data.entity.Result.Success(categories)
     }
 
     // when
@@ -93,17 +93,17 @@ class CategoryViewModelBehaviouralTest {
       // given
       val categoryId = 1L
       val categories = listOf(
-        CategoryEntity(id = categoryId, name = "box"),
+        com.sadri.core.data.entity.CategoryEntity(id = categoryId, name = "box"),
       )
       val kittens = listOf(
-        KittenEntity(id = "br", "", 123, 123),
-        KittenEntity(id = "xc", "", 123, 123)
+        com.sadri.core.data.entity.KittenEntity(id = "br", "", 123, 123),
+        com.sadri.core.data.entity.KittenEntity(id = "xc", "", 123, 123)
       )
       loadCategoriesUseCase.stub {
-        onBlocking { invoke() } doReturn Result.Success(categories)
+        onBlocking { invoke() } doReturn com.sadri.core.data.entity.Result.Success(categories)
       }
       loadKittensUseCase.stub {
-        onBlocking { invoke(categoryId) } doReturn Result.Success(kittens)
+        onBlocking { invoke(categoryId) } doReturn com.sadri.core.data.entity.Result.Success(kittens)
       }
 
       // when

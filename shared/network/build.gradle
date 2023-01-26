@@ -1,0 +1,52 @@
+plugins {
+    id 'com.android.library'
+    id 'org.jetbrains.kotlin.android'
+    id 'kotlin-kapt'
+    id 'dagger.hilt.android.plugin'
+}
+
+android {
+    namespace 'com.sadri.shared_network'
+    compileSdk build.compileSdk
+
+    defaultConfig {
+        minSdk build.minSdk
+        targetSdk build.targetSdk
+
+        testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
+        consumerProguardFiles "consumer-rules.pro"
+    }
+
+    buildTypes {
+        release {
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+        }
+    }
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_1_8
+        targetCompatibility JavaVersion.VERSION_1_8
+    }
+    kotlinOptions {
+        jvmTarget = '1.8'
+    }
+}
+
+dependencies {
+    implementation project(':shared:core')
+    // di
+    kapt "com.google.dagger:hilt-android-compiler:$library.hilt"
+    implementation "com.google.dagger:hilt-android:$library.hilt"
+
+    // network
+    implementation "com.google.code.gson:gson:$library.json"
+    implementation("com.squareup.retrofit2:retrofit:$library.retrofit")
+    implementation("com.squareup.retrofit2:converter-gson:$library.retrofit")
+    implementation "com.squareup.okhttp3:logging-interceptor:$library.okhttp"
+
+    // okhttp
+    implementation "com.squareup.okhttp3:okhttp:$library.okhttp"
+
+    // logger
+    implementation "com.jakewharton.timber:timber:$library.timber"
+}

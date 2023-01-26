@@ -1,7 +1,7 @@
 package com.sadri.category.data.mapper
 
 import com.sadri.category.data.model.CategoryItem
-import com.sadri.shared.data.entity.CategoryEntity
+import com.sadri.core.data.entity.CategoryEntity
 import javax.inject.Inject
 import javax.inject.Singleton
 
@@ -11,7 +11,7 @@ class CategoryItemMapper @Inject constructor() {
     return categoryEntityList.map { it.toCategoryItem() }
   }
 
-  private fun CategoryEntity.toCategoryItem(): CategoryItem {
+  private fun com.sadri.core.data.entity.CategoryEntity.toCategoryItem(): CategoryItem {
     return CategoryItem(id = id, title = name)
   }
 }
